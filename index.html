@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <title>Giphy API</title>
+
+    <style>
+
+        button {    
+             width: 150px; 
+             height: 50px;
+             border-radius: 10px;
+             background-color: red;
+             color: white;
+             font-weight: bold;
+             margin-left: 20px;
+             margin-right: 20px;
+             padding: 10px;
+           }
+
+    header { width: 100%;
+             height: 200px;
+             background-color: black;
+             background-image: url("./assets/images/poppyflower.jpg");
+             background-repeat: no-repeat;
+    }
+
+    #container { margin-left: 10%;
+    
+    }
+
+    #user-form { float: right; 
+                 font-size: 22px;
+                padding: 20px;}
+     
+    </style>
+</head>
+
+<body>
+    <header id="head">
+
+    </header>
+    <div id="container">
+        <div data-flower="flowers" id="flower"></div>
+        <form id="user-form">
+            <label for="user-input" id="search">Search Flower Giphy</label>
+            <input type="add-flower" type="submit">
+        </form>
+    </div>
+    <div id="gifs"></div>
+
+    <script type="text/javascript">
+
+        var topics = ["tulip", "rose", "hibiscus", "frangipani", "sunflower", "dasiy"];
+
+        for (var i = 0; i < topics.length; i++) {
+            var newButton = $("<button>");
+            newButton.attr('src', topics[i]);
+            newButton.addClass('chosenFlower');
+            newButton.attr('data-name', topics[i]);
+            newButton.text(topics[i]);
+            $("#flower").append(newButton);
+
+        };
+
+        console.log(newButton);
+
+        $("#flower").on('click', function () {
+            var topics = $(this).data('flowers');
+            var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=kDKEhNLvKrDe2ePk9woogDxgcbPp27Wr&q= " + flower + " &limit=10&offset=0&rating=G&lang=en";
+            
+
+            $.ajax({
+                url: queryURL,
+                method: "GET"
+            }).done(function (response) {
+                console.log(response);
+
+                for (i = 0; i < response.data.length; i++) {
+                    var flowerDiv = $("<div>");
+                    var p = $("<p>").text("Rating " + response.data[i].rating);
+                    var flowerImg = $("<img>");
+                    var userInput =
+                        flowerDiv.append(p);
+                    flowerDiv.append(flowerImg);
+                    $("gifs").append(flowerDiv);
+                    event.preventDefault();
+
+                //add user input to search API
+                // var flower = $("#add-flower").val().trim();
+                // flower.push(topics);
+
+
+
+                }
+
+
+            });
+
+
+        })
+
+    </script>
+</body>
+
+</html>
